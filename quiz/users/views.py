@@ -8,11 +8,14 @@ from .forms import RegisterForm
 from django.shortcuts import render, redirect,reverse
 from django.contrib.auth import login, authenticate
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+
+
 
 def home(request):
     return HttpResponse("welcomt to home");
 
-@login_required
+
 def quiz_list(request):
     with connection.cursor() as cursor:
         cursor.execute("SELECT quizid, quiz_name FROM quizzes;")  
@@ -133,8 +136,6 @@ def register(request):
         print(f"Received POST request. Email: {email}, USN: {usn}, Password: {password}")
         try:
             register_user(usn,email, password)
-            user = authenticate(username = email, password = password)
-            login(request, user)
             print("Value added to the database successfully")
             return redirect('/')
         except Exception as e:
@@ -152,11 +153,9 @@ def My_login(request):
         print(f"Received LOGIN request. Email: {email}, USN: {usn}, Password: {password}")
 
         try:
-            if My_login1(usn, email, password):
-                user = authenticate(request, username=email, password=password)
-                login(request, user)
+            if  (usn, email, password):
                 print(f"sucess login")
-                return redirect('/')
+                return redirect('/quizz')
             else:
                 print("Login failed")
                 return HttpResponse('<script>alert("User not found."); window.location.href = "/login/";</script>')
