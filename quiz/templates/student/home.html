@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quizzes</title>
+</head>
+<body>
+    <h1>Quiz List</h1>
+    <ul>
+        {% for quiz_id, quiz_name in quiz_data %}
+            <li><a href="{% url 'questions' quiz_id %}">{{ quiz_name }}</a></li>
+        {% endfor %}
+
+        <a href="{% url 'logout' %}" class="btn btn-primary">Logout</a>
+    </ul>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!-- register.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="post" class="form-group">
+        {% csrf_token %}
+        
+        <label for="{{ form.email.id_for_label }}">Email:</label>
+        {{ form.email }}
+        {{ form.email.errors }}
+
+        <label for="{{ form.usn.id_for_label }}">USN:</label>
+        {{ form.usn }}
+        {{ form.usn.errors }}
+
+        <label for="{{ form.password.id_for_label }}">Password:</label>
+        {{ form.password }}
+        {{ form.password.errors }}
+
+        <button type="submit" class="btn btn-success">login</button>
+    </form>
+</body>
+</html>

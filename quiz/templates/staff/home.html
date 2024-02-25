@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Quizzes</title>
+</head>
+<body>
+    <h1>Quiz List</h1>
+    <button><a href="{% url 'create' %}">create new quiz</a></button>
+    <h1>add questions to existing quiz</h1>
+    <ul>
+        {% for quiz_id, quiz_name in quiz_data %}
+            <li><a href="{% url 'exist' quiz_id %}">{{ quiz_name }}</a></li>
+        {% endfor %}
+    </ul>
+</body>
+</html> 

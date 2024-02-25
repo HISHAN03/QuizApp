@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>exist</title>
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+<body>
+
+    <form method="post" >
+        {% csrf_token %}
+        <label for="quiz_id">Quizid</label>
+        <input type="text" id="quiz_id" name="quiz_id" required><br>
+
+        <label for="quiz_name">Quiz_name</label>
+        <input type="text" id="quiz_name" name="quiz_name" required><br>
+
+
+        <label for="question_text">Question:</label>
+        <input type="text" id="question" name="question_text" required><br>
+
+        <label for="op1">Option 1:</label>
+        <input type="text" id="op1" name="op1" required><br>
+
+        <label for="op2">Option 2:</label>
+        <input type="text" id="op2" name="op2" required><br>
+
+        <label for="op3">Option 3:</label>
+        <input type="text" id="op3" name="op3" required><br>
+
+        <label for="op4">Option 4:</label>
+        <input type="text" id="op4" name="op4" required><br>
+
+        <label for="ans">Answer:</label>
+        <input type="text" id="ans" name="ans" required><br>
+
+        <button type="button" id="submit-btn">Submit</button>
+    </form>
+
+    <script>
+        $(document).ready(function() {
+            $('#submit-btn').click(function() {
+                console.log("Submit button clicked");
+
+                var quizid = $('#quiz_id').val();
+                var quiz_name = $('#quiz_name').val();
+                var question = $('#question').val();
+                var op1 = $('#op1').val();
+                var op2 = $('#op2').val();
+                var op3 = $('#op3').val();
+                var op4 = $('#op4').val();
+                var ans = $('#ans').val();
+
+                console.log("Values to be submitted:", quizid,quiz_name, question, op1, op2, op3, op4, ans);
+
+                addNewValueToDatabase(quizid,quiz_name, question, op1, op2, op3, op4, ans);
+            });
+
+            function addNewValueToDatabase(quizid,quiz_name, question, op1, op2, op3, op4, ans)
+             {
+                console.log("Submitting to the database...");
+
+                $.ajax({
+                    url: "{% url 'add_New_value_to_database' %}",
+                    type: "POST",
+                    data: {
+                        'quizid': quizid,
+                        'quiz_name':quiz_name,
+                        'question': question,
+                        'op1': op1,
+                        'op2': op2,
+                        'op3': op3,
+                        'op4': op4,
+                        'ans': ans,
+                    },
+                    success: function() {
+                        console.log("Value added to the database successfully");
+                    },
+                    error: function(error) {
+                        console.error("Error adding value to the database:", error);
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
