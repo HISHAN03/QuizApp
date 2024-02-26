@@ -128,6 +128,16 @@ def add_New_value_to_database_view(request):
 
 
 
+
+
+
+
+
+
+
+
+
+
 def register(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -145,6 +155,11 @@ def register(request):
     return render(request, 'student/register.html', {'form': form})
 
 
+
+
+
+
+
 def My_login(request):
     if request.method == 'POST':
         email = request.POST.get('email')
@@ -153,7 +168,7 @@ def My_login(request):
         print(f"Received LOGIN request. Email: {email}, USN: {usn}, Password: {password}")
 
         try:
-            if  (usn, email, password):
+            if  My_login1(usn, email, password):
                 print(f"sucess login")
                 return redirect('/quizz')
             else:

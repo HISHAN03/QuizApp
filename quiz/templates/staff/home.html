@@ -2,11 +2,39 @@
 <html>
 <head>
     <title>Quizzes</title>
+
+    
+<link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
+
 </head>
+
 <body>
-    <h1>Quiz List</h1>
-    <button><a href="{% url 'create' %}">create new quiz</a></button>
-    <h1>add questions to existing quiz</h1>
+    <div class="m-5 flex items-center justify-center">
+    <h1 class="font-bold text-4xl" >Quiz.com</h1>
+    </div>
+    <br>
+    <br>
+
+    <div class="mockup-window border bg-base-300">
+
+        <div class="m-5 flex items-center justify-center">
+        </div>
+        <div class="mt-2 flex items-center justify-center">
+            <button class="mt-5 btn btn-wide  btn-outline btn-primary" > <a href="{% url 'create' %}">create quiz</a></button>
+        </div>
+    </div>
+
+
+
+
+    <br>
+
+    <div class="m-5 flex items-center justify-center">
+        <h1 class="font-bold text-4xl">Add questions to existing quiz</h1>
+    </div>
+ 
+
     <ul>
         {% for quiz_id, quiz_name in quiz_data %}
             <li><a href="{% url 'exist' quiz_id %}">{{ quiz_name }}</a></li>
