@@ -16,28 +16,30 @@
     <br>
     <br>
 
-    <div class="mockup-window border bg-base-300">
 
-        <div class="m-5 flex items-center justify-center">
+    <div class="m-5 flex items-center justify-center">
+        <div class="card-actions justify-end">
+            <a href="{% url 'create' %}" class="btn btn-wide btn-outline btn-primary">Create New Quiz</a>
         </div>
-        <div class="mt-2 flex items-center justify-center">
-            <button class="mt-5 btn btn-wide  btn-outline btn-primary" > <a href="{% url 'create' %}">create quiz</a></button>
         </div>
-    </div>
 
-
-
-
+    
     <br>
 
     <div class="m-5 flex items-center justify-center">
         <h1 class="font-bold text-4xl">Add questions to existing quiz</h1>
     </div>
- 
 
     <ul>
         {% for quiz_id, quiz_name in quiz_data %}
-            <li><a href="{% url 'exist' quiz_id %}">{{ quiz_name }}</a></li>
+            <div class="m-4 card w-100 bg-neutral-700 text-primary-content my-4">
+                <div class="card-body">
+                    <h2 class="card-title text-base-content font-bold text-2xl">Add questions to {{ quiz_name }} Quiz</h2>
+                    <div class="card-actions justify-end">
+                        <a href="{% url 'exist' quiz_id %}" class="btn btn-accent">Add Questions</a>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
     </ul>
 </body>

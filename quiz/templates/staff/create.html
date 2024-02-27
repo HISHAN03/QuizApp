@@ -5,38 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exist</title>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
+<script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body>
-
-    <form method="post" >
-        {% csrf_token %}
-        <label for="quiz_id">Quizid</label>
-        <input type="text" id="quiz_id" name="quiz_id" required><br>
-
-        <label for="quiz_name">Quiz_name</label>
-        <input type="text" id="quiz_name" name="quiz_name" required><br>
+    <div class="m-5 flex items-center justify-center">
+        <h1 class="font-bold text-4xl" >Create new Quiz</h1>
+        </div>
 
 
-        <label for="question_text">Question:</label>
-        <input type="text" id="question" name="question_text" required><br>
+        <div class="mockup-browser border bg-base-300 m-5">
+            <div class="mockup-browser-toolbar">
+              <div class="input">https://NewQuiz.com</div>
+            </div>
+            <div class="flex justify-center px-4 py-16 bg-base-200">
 
-        <label for="op1">Option 1:</label>
-        <input type="text" id="op1" name="op1" required><br>
 
-        <label for="op2">Option 2:</label>
-        <input type="text" id="op2" name="op2" required><br>
+                <form method="post" >
+                    {% csrf_token %}
+               
+                    <input type="text" id="quiz_id" name="quiz_id"  placeholder=" Quizid (1-20)" class="input input-bordered input-accent w-full max-w-xs m-5"required><br>
 
-        <label for="op3">Option 3:</label>
-        <input type="text" id="op3" name="op3" required><br>
+                    <input type="text" id="quiz_name" name="quiz_name" placeholder="Quiz Name:" class="input input-bordered input-accent w-full max-w-xs m-5 " required><br>
+            
 
-        <label for="op4">Option 4:</label>
-        <input type="text" id="op4" name="op4" required><br>
+                    <input type="text" id="question" name="question_text" placeholder="Question" class="input input-bordered input-accent w-full max-w-xs m-5 " required><br>
+            
+       
+                    <input type="text" id="op1" name="op1" placeholder="Option 1:" class="input input-bordered input-accent w-full max-w-xs m-5 " required><br>
+            
 
-        <label for="ans">Answer:</label>
-        <input type="text" id="ans" name="ans" required><br>
+                    <input type="text" id="op2" name="op2" placeholder="Option 2:" class="input input-bordered input-accent w-full max-w-xs m-5 " required><br>
+            
+  
+                    <input type="text" id="op3" name="op3" placeholder="Option 3:" class="input input-bordered input-accent w-full max-w-xs m-5 " required><br>
+            
 
-        <button type="button" id="submit-btn">Submit</button>
-    </form>
+                    <input type="text" id="op4" name="op4" placeholder="Option 4:" class="input input-bordered input-accent w-full max-w-xs m-5 " required><br>
+            
+
+                    <input type="text" id="ans" name="ans" placeholder="Answer:" class="input input-bordered input-accent w-full max-w-xs m-5 " required><br>
+            
+
+                    <div class="m-5 flex items-center justify-center">
+                        <div class="card-actions justify-end">
+                           
+                            <button type="button"   class="btn btn-wide  btn-outline btn-primary" id="submit-btn">Submit</button>
+                        </div>
+                        </div>
+                </form>
+            </div>
+          
+
+
 
     <script>
         $(document).ready(function() {
