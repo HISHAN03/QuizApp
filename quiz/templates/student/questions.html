@@ -7,8 +7,6 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 </head>
 <body>
-
-
     <div class="m-5 flex items-center justify-center">
         <h1 class="font-bold text-4xl">Quiz {{ quiz_id }}</h1>
     </div>
@@ -48,47 +46,78 @@
         </nav>
       </footer>
 
-    <script>
-        $(document).ready(function() {
+      <script>
+        $(document).ready(function () {
             var score = 0;
-
-            $("#submit-btn").on("click", function() {
+    
+            $("#submit-btn").on("click", function () {
                 score = 0;
                 console.log("Submit button clicked");
-
-                $("[name^=answer_]").each(function() {
+    
+                $("[name^=answer_]").each(function () {
                     var questionId = $(this).attr("name").split("_")[1];
                     console.log("Checking question ID:", questionId);
-
+    
                     var selectedOption = $("input[name=answer_" + questionId + "]:checked").val();
                     console.log("Selected option:", selectedOption);
-
+    
                     var correctAnswer = $("#correct_answer_" + questionId).val();
                     console.log("Correct answer:", correctAnswer);
-                    
+    
                     if (selectedOption === correctAnswer) {
                         score++;
                         console.log("Correct answer! Score:", score);
-                        
                     } else {
                         console.log("Incorrect answer.");
                     }
                 });
-
+    
                 console.log("Final score:", score);
-                $("#score-display").text(score);
-
-                $("#result").show();
-
+    
+                var user_email = getCookie('user_email');
                 var resultMessage = score >= 4 ? 'Pass' : 'Failed, try again next time';
-               alert('Your Score: ' + score + '\n' + resultMessage);
-
+                alert('Your Score: ' + score + '\n' + resultMessage + '\nUser Email: ' + user_email);
                 
+    
+                // Send a POST request to the update_score URL
+                $.ajax({
+                    url: '/update_score/',  // Update with the correct URL
+                    type: 'POST',
+                    data: {
+                        'user_email': user_email,
+                        'score': score
+                    },
+                    success: function (data) {
+
+                        console.log('Score updated successfully');
+                        window.location.href = '/quizz';
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error('Error updating score:', textStatus, errorThrown);
+                    }
+                });
+    
+                console.log("User Email:", user_email);
             });
-         
+    
+            function getCookie(name) {
+                var cookieValue = null;
+                if (document.cookie && document.cookie !== '') {
+                    var cookies = document.cookie.split(';');
+                    for (var i = 0; i < cookies.length; i++) {
+                        var cookie = cookies[i].trim();
+                        if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                            cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                            break;
+                        }
+                    }
+                }
+                return cookieValue;
+            }
         });
-        
-        </script>
+    </script>
+    
+    
         <script src="https://cdn.tailwindcss.com"></script>
 </body>
 </html>

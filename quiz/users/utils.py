@@ -36,3 +36,17 @@ def My_login1(usn, email1, password1):
                 return True
 
         return False
+
+
+def staff_signup1(email1, password1):
+    with connection.cursor() as cursor:
+        sql_query = "SELECT email, password FROM staff_login;"
+        cursor.execute(sql_query)
+        results = cursor.fetchall()
+
+        for result in results:
+            emailid, password = result
+            if email1 == emailid and password1 == password:
+                return True
+
+        return False
