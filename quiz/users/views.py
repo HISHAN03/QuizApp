@@ -12,15 +12,10 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import YourScoreModel
 
 
-
-
-
-
 def home(request):
     return HttpResponse("welcomt to home");
 
-
-
+#returns quiz name and leaderboard data
 def quiz_list(request):
     if 'user_email' not in request.COOKIES:
         return redirect('/')
@@ -30,6 +25,7 @@ def quiz_list(request):
         leaderboard_data = YourScoreModel.objects.all().order_by('-score')[:10] 
     return render(request, 'student/home.html', {'quiz_data': quiz_data,'leaderboard_data': leaderboard_data})
 
+# gives quiz questions 
 def questions(request, quiz_id):
     if 'user_email' not in request.COOKIES:
         return redirect('/')
@@ -44,33 +40,11 @@ def questions(request, quiz_id):
 
     return render(request, 'student/questions.html', context)
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+#redirects to staff login
 def staff_login(request):
     return render(request,'staff/login.html');
 
-
-
-
-
-
-
-
-
+#returns quiz list to staff
 def staff_quiz_list(request):
     if 'staff_email' not in request.COOKIES:
       return redirect('/staff')
@@ -96,11 +70,6 @@ def exist(request, quiz_id):
     }
     return render(request, 'staff/exist.html', context)
 
-
-
-
-
-
 @csrf_exempt
 def delete_quiz(request, quiz_id):
     if request.method == 'POST':
@@ -109,7 +78,7 @@ def delete_quiz(request, quiz_id):
             cursor.execute(query_delete_questions, [quiz_id])
             query_delete_quiz = "DELETE FROM quizzes WHERE quizid = %s;"
             cursor.execute(query_delete_quiz, [quiz_id])
-        return redirect('/staff')
+        return redirect('/staff_quiz_list')
     return HttpResponse("Invalid request method")
 
 
@@ -137,7 +106,6 @@ def add_value_to_database_view(request):
 
         try:
             add_value_to_database(quizid, question, op1, op2, op3, op4, ans)
-            print("Value added to the database successfully")
             return JsonResponse({'message': 'Value added to the database'}, status=200)
         except Exception as e:
             print(f"Error adding value to the database: {e}")

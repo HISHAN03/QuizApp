@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Questions</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
 
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
@@ -47,7 +48,19 @@
       </footer>
 
       <script>
-        $(document).ready(function () {
+
+        const styleTag = document.createElement('style');
+    styleTag.textContent = `
+        .my-swal {
+            background-color: white !important;
+            font-size: 18px !important;
+            padding: 20px !important;
+            margin: 20px !important;
+        }
+    `;
+    document.head.appendChild(styleTag);
+
+        $(document).ready(async function () {
             var score = 0;
     
             $("#submit-btn").on("click", function () {
@@ -76,25 +89,37 @@
     
                 var user_email = getCookie('user_email');
                 var resultMessage = score >= 4 ? 'Pass' : 'Failed, try again next time';
-                alert('Your Score: ' + score + '\n' + resultMessage + '\nUser Email: ' + user_email);
+var swalIcon = score >= 4 ? 'success' : 'error';
+
+Swal.fire({
+    icon: swalIcon,
+    title: 'Your Score: ' + score,
+    text: resultMessage,
+    footer: 'User Email: ' + user_email,
+    customClass: {
+        container: 'my-swal',
+    },
+});
+
                 
-    
-                // Send a POST request to the update_score URL
                 $.ajax({
-                    url: '/update_score/',  // Update with the correct URL
+                    url: '/update_score/',  
                     type: 'POST',
                     data: {
                         'user_email': user_email,
                         'score': score
                     },
                     success: function (data) {
+    console.log('Score updated successfully');
+    setTimeout(function () {
+        window.location.href = '/quizz';
+    }, 4000); 
+},
 
-                        console.log('Score updated successfully');
-                        window.location.href = '/quizz';
-                    },
                     error: function (xhr, textStatus, errorThrown) {
                         console.error('Error updating score:', textStatus, errorThrown);
                     }
+                    
                 });
     
                 console.log("User Email:", user_email);

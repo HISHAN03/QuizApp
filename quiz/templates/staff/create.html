@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exist</title>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
 <script src="https://cdn.tailwindcss.com"></script>
@@ -16,7 +17,7 @@
 
         <div class="mockup-browser border bg-base-300 m-5">
             <div class="mockup-browser-toolbar">
-              <div class="input">https://NewQuiz.com</div>
+              <div class="input">Create new Quiz</div>
             </div>
             <div class="flex justify-center px-4 py-16 bg-base-200">
 
@@ -52,13 +53,12 @@
                            
                             <button type="button"   class="btn btn-wide  btn-outline btn-primary" id="submit-btn">Submit</button>
                         </div>
-                        </div>
+                    </div>
+                    <div class="card-actions justify-center">
+                    <a href="{% url 'staff_quiz_list' %}" class="text-blue-500">Go back</a>
+                    </div>
                 </form>
             </div>
-          
-
-
-
     <script>
         $(document).ready(function() {
             $('#submit-btn').click(function() {
@@ -96,8 +96,16 @@
                         'ans': ans,
                     },
                     success: function() {
-                        console.log("Value added to the database successfully");
-                    },
+    Swal.fire({
+        title: 'Question Added',
+        icon: 'success',
+        customClass: {
+            container: 'my-swal' // Add your custom class here
+        }
+    });
+    console.log("Value added to the database successfully");
+}
+,
                     error: function(error) {
                         console.error("Error adding value to the database:", error);
                     }

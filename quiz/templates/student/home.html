@@ -10,25 +10,18 @@
       <a class="btn btn-ghost text-xl">Quizz.com</a>
     </div>
     <div class="flex-none">
-      <div class="dropdown dropdown-end">
-        <div tabindex="0" role="button" class="btn btn-ghost btn-circle avatar">
-          <div class="w-10 rounded-full ">
-            <img alt="Tailwind CSS Navbar component" src="https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg" />
-          </div>
-        </div>
-        <ul tabindex="0" class="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
-          <a onclick="clearCookies()">Logout</a>
-        </ul>
+      <div class="ml-2">
+          <button class="btn btn-outline btn-error btn-sm" onclick="clearCookies()">Logout</button>
       </div>
-    </div>
   </div>
-  <div class="hero min-h-[70vh]" style="background-image: url(https://daisyui.com/images/stock/photo-1507358522600-9f71e620c44e.jpg);">
+  </div>
+  <div class="hero min-h-[70vh]" style="background-image: url(https://i.pinimg.com/564x/02/5d/54/025d541f03e6197115e3e77a30dddf1b.jpg);">
     <div class="hero-overlay bg-opacity-60"></div>
     <div class="hero-content text-center text-neutral-content">
       <div class="max-w-md">
-        <h1 class="mb-5 text-5xl font-bold">Hello there</h1>
-        <p class="mb-5">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi.</p>
-        <button class="btn btn-primary">Get Started</button>
+        <h1 class="mb-5 text-5xl font-bold" >Hello</h1>
+        <h1 class="mb-5 ml-0 text-2xl text-blue-200 font-bold" id="greeting"></h1>
+        <p class="mb-5">how are u,Ready to take some quizzes and test ur knowledge?</p>
       </div>
     </div>
   </div>    
@@ -52,17 +45,39 @@
 <div class="mt-5 flex items-center justify-center">
   <h1 class="font-bold text-4xl">Leaderboard</h1>
 </div>
-<div class="flex flex-col items-center">
-  {% for user_score in leaderboard_data %}
-      <div class="m-4 card w-100 bg-neutral-700 text-primary-content my-4">
-          <div class="card-body">
-              <h2 class="card-title text-base-content font-bold text-2xl">
-                  {{ user_score.username }} - {{ user_score.score }} points
-              </h2>
-          </div>
-      </div>
-  {% endfor %}
+<div class="mockup-window border bg-base-300 m-5 ml-20 mr-20">
+  <div class="overflow-x-auto">
+    <table class="table">
+      <thead>
+        <tr>
+        <th class="font-bold text-4xl" >Name</th>
+        <th class="font-bold text-4xl">score</th>
+      </tr>
+    </thead>
+    {% for user_score in leaderboard_data %}
+    <tbody>
+      <tr class="bg-base-200">
+        <td class="font-bold text-xl" >                  {{ user_score.username }}</td>
+        <td class="font-bold text-xl" > {{ user_score.score }} points</td>
+      </tr>
+      
+    </tbody>
+    {% endfor %}
+  </table>
 </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -83,10 +98,7 @@
 
       
           function clearCookies() {
-        // Add the names of your cookies that you want to clear
-        var cookieNames = ["staff_email"];
-
-        // Iterate through each cookie name and delete the corresponding cookie
+        var cookieNames = ["user_email"];
         cookieNames.forEach(function(cookieName) {
             document.cookie = cookieName + '=;expires=Thu, 01 Jan 1970 00:00:01 GMT;';
         });
@@ -94,6 +106,37 @@
 
         window.location.href = '/';
     }
+
+
+
+
+
+    function getCookie(name) {
+            var cookieValue = null;
+            if (document.cookie && document.cookie !== '') {
+                var cookies = document.cookie.split(';');
+                for (var i = 0; i < cookies.length; i++) {
+                    var cookie = cookies[i].trim();
+                    if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                        cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                        break;
+                    }
+                }
+            }
+            return cookieValue;
+        }
+
+
+        document.addEventListener('DOMContentLoaded', function() {
+            var UserEmail = getCookie('user_email');
+            var greetingElement = document.getElementById('greeting');
+
+            if (UserEmail) {
+                greetingElement.textContent = UserEmail;
+            } else {
+                greetingElement.textContent = 'Hello Guest';
+            }
+        });
     </script>
 </body>
 </html>
