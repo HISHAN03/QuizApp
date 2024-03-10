@@ -1,110 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>exist</title>
+    <script src="./js/exist.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/daisyui@4.7.2/dist/full.min.css" rel="stylesheet" type="text/css" />
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
+
 <body>
     <div class="m-5 flex items-center justify-center">
-        <h1 class="font-bold text-4xl" >{{ quiz.0.0 }}</h1>
+        <h1 class="font-bold text-4xl">{{ quiz.0.0 }}</h1>
+    </div>
+    <div class="mockup-browser border bg-base-300 m-5">
+        <div class="mockup-browser-toolbar">
+            <div class="input">Add to Existing Quiz</div>
         </div>
-        <div class="mockup-browser border bg-base-300 m-5">
-            <div class="mockup-browser-toolbar">
-              <div class="input">Add to Existing Quiz</div>
-            </div>
-            <div class="flex justify-center px-4 py-16 bg-base-200">
+        <div class="flex justify-center px-4 py-16 bg-base-200">
 
-    <form method="post" >
-        {% csrf_token %}
+            <form method="post">
+                {% csrf_token %}
 
-        <input type="text" id="quiz_id" name="quiz_id" value="{{ quiz_id }}" readonly placeholder="Quiz_id" class="input input-bordered input-info w-full max-w-xs"  ><br>
-
- 
-        <input type="text" id="question" name="question_text" required placeholder="Question" class="input input-bordered input-info w-full max-w-xs mt-5"  ><br>
+                <input type="text" id="quiz_id" name="quiz_id" value="{{ quiz_id }}" readonly placeholder="Quiz_id"
+                    class="input input-bordered input-info w-full max-w-xs"><br>
 
 
-        <input type="text" id="op1" name="op1" required placeholder="Option 1:" class="input input-bordered input-info w-full max-w-xs mt-5"  ><br>
+                <input type="text" id="question" name="question_text" required placeholder="Question"
+                    class="input input-bordered input-info w-full max-w-xs mt-5"><br>
 
 
-        <input type="text" id="op2" name="op2" required placeholder="Option 2:" class="input input-bordered input-info w-full max-w-xs mt-5"  ><br>
+                <input type="text" id="op1" name="op1" required placeholder="Option 1:"
+                    class="input input-bordered input-info w-full max-w-xs mt-5"><br>
 
 
-        <input type="text" id="op3" name="op3" required placeholder="Option 3:" class="input input-bordered input-info w-full max-w-xs mt-5"  ><br>
+                <input type="text" id="op2" name="op2" required placeholder="Option 2:"
+                    class="input input-bordered input-info w-full max-w-xs mt-5"><br>
 
 
-        <input type="text" id="op4" name="op4" required placeholder="Option 4:" class="input input-bordered input-info w-full max-w-xs mt-5"  ><br>
-
-     
-        <input type="text" id="ans" name="ans" required placeholder="Answer" class="input input-bordered input-info w-full max-w-xs mt-5"  ><br>
+                <input type="text" id="op3" name="op3" required placeholder="Option 3:"
+                    class="input input-bordered input-info w-full max-w-xs mt-5"><br>
 
 
-        <div class="m-5 flex items-center justify-center">
-            <div class="card-actions justify-end">
-               
-                <button type="button"   class="btn btn-wide  btn-outline btn-accent" id="submit-btn">Submit</button>
-            </div>
-            </div>
-            <div class="card-actions justify-center">
-                <a href="{% url 'staff_quiz_list' %}" class="text-blue-500">Go back</a>
+                <input type="text" id="op4" name="op4" required placeholder="Option 4:"
+                    class="input input-bordered input-info w-full max-w-xs mt-5"><br>
+
+
+                <input type="text" id="ans" name="ans" required placeholder="Answer"
+                    class="input input-bordered input-info w-full max-w-xs mt-5"><br>
+
+
+                <div class="m-5 flex items-center justify-center">
+                    <div class="card-actions justify-end">
+
+                        <button type="button" class="btn btn-wide  btn-outline btn-accent"
+                            id="submit-btn">Submit</button>
+                    </div>
                 </div>
-    </form>
-    </div> 
+                <div class="card-actions justify-center">
+                    <a href="{% url 'staff_quiz_list' %}" class="text-blue-500">Go back</a>
+                </div>
+            </form>
+        </div>
+        <script>
+            $(document).ready(function () {
+                $('#submit-btn').click(function () {
+                    console.log("Submit button clicked");
 
-    <script>
-        $(document).ready(function() {
-            $('#submit-btn').click(function() { 
-                console.log("Submit button clicked");
+                    var quizid = $('#quiz_id').val();
+                    var question = $('#question').val();
+                    var op1 = $('#op1').val();
+                    var op2 = $('#op2').val();
+                    var op3 = $('#op3').val();
+                    var op4 = $('#op4').val();
+                    var ans = $('#ans').val();
 
-                var quizid = $('#quiz_id').val();
-                var question = $('#question').val();
-                var op1 = $('#op1').val();
-                var op2 = $('#op2').val();  
-                var op3 = $('#op3').val();
-                var op4 = $('#op4').val();
-                var ans = $('#ans').val();
+                    console.log("Values to be submitted:", quizid, question, op1, op2, op3, op4, ans);
 
-                console.log("Values to be submitted:", quizid, question, op1, op2, op3, op4, ans);
-
-                addValueToDatabase(quizid, question, op1, op2, op3, op4, ans);
-            });
-
-            function addValueToDatabase(quizid, question, op1, op2, op3, op4, ans) {
-                console.log("Submitting to the database...");
-
-                $.ajax({
-                    url: "{% url 'add_value_to_database' %}",
-                    type: "POST",
-                    data: {
-                        'quizid': quizid,
-                        'question': question,
-                        'op1': op1,
-                        'op2': op2,
-                        'op3': op3,
-                        'op4': op4,
-                        'ans': ans,
-                    },
-                    success: function() {
-    Swal.fire({
-        title: 'Question Added',
-        icon: 'success',
-        customClass: {
-            container: 'my-swal' // Add your custom class here
-        }
-    });
-    console.log("Value added to the database successfully");
-}
-,
-                    error: function(error) {
-                        console.error("Error adding value to the database:", error);
-                    }
+                    addValueToDatabase(quizid, question, op1, op2, op3, op4, ans);
                 });
-            }
-        });
-    </script>
+
+                function addValueToDatabase(quizid, question, op1, op2, op3, op4, ans) {
+                    console.log("Submitting to the database...");
+
+                    $.ajax({
+                        url: "{% url 'add_value_to_database' %}",
+                        type: "POST",
+                        data: {
+                            'quizid': quizid,
+                            'question': question,
+                            'op1': op1,
+                            'op2': op2,
+                            'op3': op3,
+                            'op4': op4,
+                            'ans': ans,
+                        },
+                        success: function () {
+                            Swal.fire({
+                                title: 'Question Added',
+                                icon: 'success',
+                                customClass: {
+                                    container: 'my-swal'
+                                }
+                            });
+                            console.log("Value added to the database successfully");
+                        }
+                        ,
+                        error: function (error) {
+                            console.error("Error adding value to the database:", error);
+                        }
+                    });
+                }
+            });
+        </script>
 </body>
+
 </html>
